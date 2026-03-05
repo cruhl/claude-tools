@@ -91,8 +91,8 @@ claude-history warns you on every run if your retention is 90 days or less. You 
 Both tools work standalone in the terminal and as slash commands inside Claude Code.
 
 ```bash
-# One-command setup
-npx claude-tools-setup
+# After install, run once:
+claude-tools-setup
 ```
 
 Then in any session:

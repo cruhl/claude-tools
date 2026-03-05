@@ -1,13 +1,17 @@
 #!/bin/bash
 # Set up claude-tools skills for Claude Code
-# Run after: npm install -g claude-tools
+# Run after: npm install -g @cruhl/claude-tools
 
 set -e
 
-PACKAGE_DIR="$(npm root -g)/claude-tools"
+# Try scoped name first, fall back to unscoped
+PACKAGE_DIR="$(npm root -g)/@cruhl/claude-tools"
+if [ ! -d "$PACKAGE_DIR" ]; then
+  PACKAGE_DIR="$(npm root -g)/claude-tools"
+fi
 
 if [ ! -d "$PACKAGE_DIR" ]; then
-  echo "Error: claude-tools not found. Install first: npm install -g claude-tools"
+  echo "Error: claude-tools not found. Install first: npm install -g @cruhl/claude-tools"
   exit 1
 fi
 
