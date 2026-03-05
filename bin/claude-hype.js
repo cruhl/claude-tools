@@ -8,6 +8,33 @@ import { execSync } from "child_process";
 const CLAUDE_DIR = join(homedir(), ".claude");
 const PROJECTS_DIR = join(CLAUDE_DIR, "projects");
 
+function loadEnvFile() {
+  if (process.env.ANTHROPIC_API_KEY) return;
+  const candidates = [
+    join(process.cwd(), ".env"),
+    join(homedir(), ".config", "claude-tools", ".env"),
+    join(CLAUDE_DIR, ".env"),
+  ];
+  for (const envPath of candidates) {
+    if (!existsSync(envPath)) continue;
+    const lines = readFileSync(envPath, "utf-8").split("\n");
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#")) continue;
+      const eq = trimmed.indexOf("=");
+      if (eq === -1) continue;
+      const key = trimmed.slice(0, eq).trim();
+      let val = trimmed.slice(eq + 1).trim();
+      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'")))
+        val = val.slice(1, -1);
+      if (!process.env[key]) process.env[key] = val;
+    }
+    return;
+  }
+}
+
+loadEnvFile();
+
 function getUserName() {
   if (process.env.CLAUDE_HYPE_USER) return process.env.CLAUDE_HYPE_USER;
   for (let i = 2; i < process.argv.length; i++) {
@@ -39,31 +66,6 @@ Setup:
 Install:
   npm install -g claude-tools`);
   process.exit(0);
-}
-
-function loadEnvFile() {
-  if (process.env.ANTHROPIC_API_KEY) return;
-  const candidates = [
-    join(process.cwd(), ".env"),
-    join(homedir(), ".config", "claude-tools", ".env"),
-    join(CLAUDE_DIR, ".env"),
-  ];
-  for (const envPath of candidates) {
-    if (!existsSync(envPath)) continue;
-    const lines = readFileSync(envPath, "utf-8").split("\n");
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
-      const eq = trimmed.indexOf("=");
-      if (eq === -1) continue;
-      const key = trimmed.slice(0, eq).trim();
-      let val = trimmed.slice(eq + 1).trim();
-      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'")))
-        val = val.slice(1, -1);
-      if (!process.env[key]) process.env[key] = val;
-    }
-    return;
-  }
 }
 
 function findProjectDir() {
@@ -267,7 +269,6 @@ function copyToClipboard(text) {
 }
 
 async function main() {
-  loadEnvFile();
 
   let projectDir = findProjectDir();
   if (!projectDir) {
