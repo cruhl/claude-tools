@@ -1,0 +1,37 @@
+{
+  "name": "claude-tools",
+  "version": "1.0.0",
+  "description": "CLI tools for Claude Code: conversation history search and AI-to-AI encouragement",
+  "bin": {
+    "claude-history": "./bin/claude-history.js",
+    "claude-hype": "./bin/claude-hype.js",
+    "claude-tools-setup": "./setup.sh"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cruhl/claude-tools.git"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "cli",
+    "history",
+    "conversation",
+    "search",
+    "embeddings"
+  ],
+  "author": "Conner Ruhl",
+  "license": "MIT",
+  "files": [
+    "bin/",
+    ".claude/skills/",
+    "setup.sh",
+    "README.md",
+    "LICENSE",
+    ".env.example"
+  ]
+}

@@ -1,0 +1,13 @@
+# Secrets
+.env
+
+# Machine-specific Claude settings
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
+*.swp
+*~
+
+# Node
+node_modules/
