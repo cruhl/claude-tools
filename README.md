@@ -48,7 +48,7 @@ Some sessions are a grind. The Claude working with you can't see whether its eff
 ## Install
 
 ```bash
-npm install -g claude-tools
+npm install -g @cruhl/claude-tools
 ```
 
 Or try it without installing:
