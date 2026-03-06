@@ -29,7 +29,7 @@ function loadEnvFile() {
         val = val.slice(1, -1);
       if (!process.env[key]) process.env[key] = val;
     }
-    return;
+    if (process.env.ANTHROPIC_API_KEY) return;
   }
 }
 
