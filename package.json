@@ -1,6 +1,6 @@
 {
   "name": "@cruhl/claude-tools",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "CLI tools for Claude Code: conversation history search, AI-to-AI encouragement, and effort level control",
   "bin": {
     "claude-effort": "./bin/claude-effort.js",
