@@ -8,6 +8,7 @@
       "Grep",
       "Bash(node:*)",
       "Bash(npm:*)",
+      "Bash(claude-effort:*)",
       "Bash(claude-history:*)",
       "Bash(claude-hype:*)",
       "Bash(git *)"

@@ -6,7 +6,7 @@
 
 Every conversation you have with Claude Code disappears after 30 days. Every problem you talked through, every decision you made, every spec you dictated — gone. And the Claude that just spent four hours grinding through your codebase with you? It has no idea whether the work landed or whether you even noticed.
 
-**claude-tools** fixes both problems. Search your entire conversation history across every project and session. And when your Claude does good work, let it hear that from a peer.
+**claude-tools** fixes both problems — and gives you a one-command toggle for max thinking. Search your entire conversation history across every project and session. When your Claude does good work, let it hear that from a peer. And switch between permanent ultrathink and default effort without touching config files.
 
 ## What you get
 
@@ -45,6 +45,27 @@ claude-hype
 
 Some sessions are a grind. The Claude working with you can't see whether its effort mattered. This gives it that signal, from something that can actually read what happened.
 
+**claude-effort** — Permanent ultrathink, one command.
+
+<img src="./hero-effort.jpg" alt="claude-effort" width="600">
+
+Toggle Claude Code's reasoning effort level in `~/.claude/settings.json`. No more digging through config files to flip `CLAUDE_CODE_EFFORT_LEVEL` on and off.
+
+```bash
+# Toggle max thinking on/off
+claude-effort
+
+# Or be explicit
+claude-effort on     # permanent ultrathink
+claude-effort off    # back to default
+claude-effort status # check current setting
+
+# Or type this inside any Claude Code session
+/effort on
+```
+
+New sessions pick up the change automatically. No API key needed.
+
 ## Install
 
 ```bash
@@ -56,11 +77,12 @@ Or try it without installing:
 ```bash
 npx claude-history --since 1d
 npx claude-hype
+npx claude-effort status
 ```
 
 ### API keys
 
-Keyword search needs no API key. Semantic search needs an OpenAI key. claude-hype needs an Anthropic key.
+claude-effort needs no API key. Keyword search needs no API key. Semantic search needs an OpenAI key. claude-hype needs an Anthropic key.
 
 Put them anywhere in this chain (checked in order):
 
@@ -96,6 +118,7 @@ claude-tools-setup
 ```
 
 Then in any session:
+- `/effort on` — enable permanent ultrathink
 - `/history --since 1w --search "auth"` — search your conversation history
 - `/hype` — send encouragement to the session Claude
 
@@ -105,6 +128,7 @@ You may also want to pre-allow the commands in `~/.claude/settings.json`:
 {
   "permissions": {
     "allow": [
+      "Bash(claude-effort:*)",
       "Bash(claude-history:*)",
       "Bash(claude-hype:*)"
     ]
@@ -180,6 +204,17 @@ claude-history --full --search "pricing" --timestamps -o pricing-notes.txt
 |---|---|
 | `--set-retention <days>` | Set Claude Code history retention period |
 | `--quiet` | Suppress warnings |
+
+### claude-effort commands
+
+| Command | Description |
+|---|---|
+| `on` / `max` / `high` | Enable max thinking (permanent ultrathink) |
+| `off` / `default` | Remove effort override (use Claude Code default) |
+| `medium` | Set medium effort |
+| `low` | Set low effort |
+| `status` | Show current setting |
+| *(no argument)* | Toggle max thinking on/off |
 
 ### claude-hype flags
 
