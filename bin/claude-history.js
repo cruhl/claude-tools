@@ -334,7 +334,9 @@ function collectSessionFiles(args) {
 
   for (const dirName of projectDirs) {
     const dirPath = join(PROJECTS_DIR, dirName);
-    const projectPath = dirName.replace(/^-/, "/").replace(/-/g, "/");
+    const worktreeIndex = dirName.indexOf("--claude-worktrees-");
+    const baseDirName = worktreeIndex >= 0 ? dirName.slice(0, worktreeIndex) : dirName;
+    const projectPath = baseDirName.replace(/^-/, "/").replace(/-/g, "/");
 
     if (args.project && !projectPath.toLowerCase().includes(args.project.toLowerCase())) {
       continue;
