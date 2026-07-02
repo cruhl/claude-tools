@@ -262,17 +262,22 @@ function loadEnvFile() {
   }
 }
 
+function escapeRegExp(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function resolveDisplayText(entry) {
   let text = entry.display || "";
 
   if (entry.pastedContents && Object.keys(entry.pastedContents).length > 0) {
     for (const [id, paste] of Object.entries(entry.pastedContents)) {
-      const placeholder = `[Pasted text #${id}]`;
-      if (text.includes(placeholder)) {
-        text = text.replace(placeholder, paste.content || "");
-      }
+      const placeholder = new RegExp(
+        `\\[Pasted text #${escapeRegExp(id)}(?: \\+\\d+ lines?)?\\]`,
+        "g",
+      );
+      text = text.replace(placeholder, () => paste.content || "");
     }
-    if (!text.trim() && Object.keys(entry.pastedContents).length > 0) {
+    if (!text.trim()) {
       text = Object.values(entry.pastedContents)
         .map((p) => p.content || "")
         .join("\n");
